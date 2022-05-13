@@ -52,9 +52,9 @@
      var str = JSON.stringify(pay);
      console.log('open solareum');
      if (Platform.OS === 'ios'){
-       Solareumsdk.openSolareum(str);
+       Solareumsdk.open(str);
      }else {
-        Solareumsdk.openSolareum(str); 
+        Solareumsdk.open(str); 
      }
    };
  
