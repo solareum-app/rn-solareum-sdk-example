@@ -57,6 +57,31 @@
   return YES;
 }
 
+
+- (BOOL)application:(UIApplication *)application
+   openURL:(NSURL *)url
+   options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+  if (url != nil){
+    NSLog(@"%@",url);
+    [[NSNotificationCenter defaultCenter]
+           postNotificationName:@"OpenByDeepLink"
+           object:url];
+
+  }
+  
+  return true;
+}
+
+
+-(BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler{
+  printf("url \(url)");
+
+  return true;
+
+  
+}
+
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
 #if DEBUG
