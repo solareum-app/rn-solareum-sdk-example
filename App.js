@@ -5,7 +5,7 @@
  * @format
  * @flow strict-local
  */
- import React, {useEffect,useState} from 'react';
+ import React, {useEffect} from 'react';
 
  import {
    SafeAreaView,
@@ -27,8 +27,12 @@
  
  
    const handleBackApp = (event) => {
-     console.log("App = ", event)
-     Alert.alert(event);
+     console.log("App = ",event);
+     console.log(typeof(event));     
+     let client_id = event["client_id"]
+     let signature = event["signature"]
+     let status = event["status"]
+     Alert.alert(client_id + signature + status);
    }
  
    useEffect(()=>{
@@ -51,11 +55,7 @@
      }
      var str = JSON.stringify(pay);
      console.log('open solareum');
-     if (Platform.OS === 'ios'){
-       Solareumsdk.open(str);
-     }else {
-        Solareumsdk.open(str); 
-     }
+     Solareumsdk.pay(str);
    };
  
  
