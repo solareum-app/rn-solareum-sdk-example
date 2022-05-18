@@ -32,7 +32,8 @@
      let client_id = event["client_id"]
      let signature = event["signature"]
      let status = event["status"]
-     Alert.alert(client_id + signature + status);
+     const str = 'client_id: '+ client_id + '\ signature: '+ signature + '\ status: '+ status;  
+     Alert.alert(str);
    }
  
    useEffect(()=>{
@@ -46,10 +47,10 @@
    
    const openSolareum = () => {
     const pay = {
-      'address': "huong",
-      'token': 'USDC',
+      'address': '8g6dPrygYcsXisRuZ2H5Q7C6W86yYYDHARBopz3TJQKX',
+      'token': 'XSB',
       'client_id': "0918822343",
-      'quantity': 0.1,
+      'quantity': 100,
       'e_usd': 1,
       'scheme': "solareumexample"
      }
