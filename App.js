@@ -25,10 +25,9 @@
      backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
    };
  
+
  
-   const handleBackApp = (event) => {
-     console.log("App = ",event);
-     console.log(typeof(event));     
+   const handleBackApp = (event) => {    
      let client_id = event["client_id"]
      let signature = event["signature"]
      let status = event["status"]
@@ -37,9 +36,7 @@
    }
  
    useEffect(()=>{
-     Solareumsdk.subscribe({
-       handleEvent: handleBackApp
-     })
+     Solareumsdk.subscribe().then(handleBackApp)
    }, [])
  
  
