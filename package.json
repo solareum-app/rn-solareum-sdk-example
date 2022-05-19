@@ -4,25 +4,34 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
+    "ios": "react-native run-ios --port 9988",
+    "start": "react-native start --port 9988",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
+    "@rneui/base": "^4.0.0-rc.3",
+    "@rneui/themed": "^4.0.0-rc.3",
     "react": "17.0.2",
     "react-native": "0.68.2",
-    "react-native-solareum-sdk": "file:/Users/huonglam/Documents/Solareum/solareum-sdk"
-
+    "react-native-elements": "3.3.2",
+    "react-native-safe-area-context": "^4.2.5",
+    "react-native-solareum-sdk": "file:/Users/huonglam/Documents/Solareum/solareum-sdk",
+    "react-native-table-component": "^1.2.2",
+    "react-native-vector-icons": "^9.1.0",
+    "react-native-web": "^0.17.7"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
+    "@babel/plugin-proposal-class-properties": "^7.17.12",
     "@babel/runtime": "^7.17.9",
     "@react-native-community/eslint-config": "^3.0.2",
     "babel-jest": "^28.1.0",
+    "customize-cra": "^1.0.0",
     "eslint": "^8.15.0",
     "jest": "^28.1.0",
     "metro-react-native-babel-preset": "^0.70.3",
+    "react-app-rewired": "^2.2.1",
     "react-test-renderer": "17.0.2"
   },
   "jest": {

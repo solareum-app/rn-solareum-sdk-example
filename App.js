@@ -9,17 +9,16 @@
 
  import {
    SafeAreaView,
-   Button,
    StatusBar,
    StyleSheet,
    useColorScheme,
    View,
    Alert,
-   Text,
-   TextInput
- } from 'react-native';
+   Text } from 'react-native';
  import {Colors} from 'react-native/Libraries/NewAppScreen';
  import Solareumsdk from 'react-native-solareum-sdk';
+ import {Button,Input} from 'react-native-elements';
+
  
 
 
@@ -33,19 +32,17 @@
    const [address,onChangeAddress] = useState("");
    const [amount,onChangeAmount] = useState("");
    const [token,onChangeToken] = useState("");
-
    const [client_id,setClientId] = useState("")
    const [signature, setSignature] = useState("")
-   const [status, setStatus] = useState("")
-
+    const [status, setStatus] = useState("")
+  
  
    const handleBackApp = (event) => {    
-     let client_id = event["client_id"]
-     let signature = event["signature"]
-     let status = event["status"]
-     setClientId(client_id)
-     setSignature(setSignature)
-     setStatus(setStatus)
+     let cId  = event["client_id"]
+     let sign = event["signature"]
+     let stt = event["status"]
+     setSignature(sign)
+     setStatus(stt)
    }
 
 
@@ -57,15 +54,17 @@
       'token': token,
       'client_id': client_id,
       'quantity': amount,
+      'e_usd':'1',
       'scheme': scheme
      }
+
+     console.log("pay:",pay)
      var str = JSON.stringify(pay);
      console.log('open solareum');
      Solareumsdk.pay(str);
+
    };
  
-
-
  
  const getRandomInt = (min, max) => {
    return Math.floor(Math.random() * (max - min)) + min;
@@ -88,61 +87,86 @@
      if (address === "" || amount === "" || token === ""){
        Alert.alert("Fill information")
      }else{
-      const client_id = getRandomString();
+       console.log("🎉 on press")
       openSolareum(address,token,amount,client_id,"solareumexample")
      }     
    }
  
    useEffect(()=>{
+     onChangeAddress("5FE7TnNxcfPERLoPbasDfqzVb57opS3xsZ88Uh2k7Kug")
+     onChangeToken("XSB")
+     onChangeAmount("10")
+     const id = getRandomString();
+     setClientId(id);
      Solareumsdk.subscribe().then(handleBackApp)
-   }, [])
+   }, [signature])
  
  
    
    return (
      <SafeAreaView style={backgroundStyle}>
        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-       <View style = {styles.center}>
+       <View style = {styles.content}>
+       <Text style = {styles.title}>Solareum SDK Example</Text>
        <View style = {styles.sectionForm}>
-        <Text style = {styles.sectionTitle}> Address </Text>
-        <TextInput 
-              style = {styles.sectionTextInput} 
-              placeholder='Enter your address'
-              value = {address}
-              onChangeText = {(text) => onChangeAddress(text)}>
-                
-        </TextInput>
-        <Text style = {styles.sectionTitle}> Token </Text>
-        <TextInput 
-              style = {styles.sectionTextInput} 
-              placeholder='Enter token'
-              value = {token}
-              onChangeText = {(text) => onChangeToken(text)}>
-      
-          </TextInput> 
-         <Text style = {styles.sectionTitle}> Amount </Text>
-         <TextInput 
-              style = {styles.sectionTextInput} 
-              placeholder='Enter amount'
-              value = {amount}
-              onChangeText = {(text) => onChangeAmount(text)}
-              keyboardType="numeric">
-          </TextInput>
+        <Input
+            label= "Address"
+            keyboardType="decimal-pad"
+            placeholder="Enter address"
+            value={address}
+            onChangeText={(value) => onChangeAddress(value)}
+          />
+          <Input
+            label= "Token"
+            keyboardType="decimal-pad"
+            placeholder="Enter token"
+            value={token}
+            onChangeText={(value) => onChangeToken(value)}
+          />
+          <Input
+            label= "Amount"
+            keyboardType= "number-pad"
+            placeholder="Enter amount"
+            value={amount}
+            onChangeText={(value) => onChangeAmount(value)}
+          />
+            <Input
+            label= "Client ID"
+            keyboardType="decimal-pad"
+            placeholder="Enter address"
+            value={client_id}
+            onChangeText={(value) => setClientId(value)}
+          />
       </View>
-       <View style={styles.openButton}>        
-         <Button title="Open Solareum" onPress={onPress}>
-         </Button>
+       <View style={styles.openButton}>  
+       <Button 
+          title= "Pay"
+          onPress={onPress} />      
        </View>
+       {client_id != "" ? 
+       <DataContainer 
+          client_id={client_id}
+          signature={signature}
+          status= {status}/>: null}
        </View>
      </SafeAreaView>
    );
  };
+
+ const DataContainer = ({client_id,signature,status}) =>{
+   return(
+     <View style = {styles.sectionForm}>
+      <Text style = {styles.sectionTitle}> Client ID: <Text style = {styles.sectionSubtitle}>{client_id}</Text></Text>
+      <Text style = {styles.sectionTitle}> Signature: <Text style = {styles.sectionSubtitle}>{signature}</Text></Text>
+      <Text style = {styles.sectionTitle}> Status: <Text style = {styles.sectionSubtitle}>{status}</Text></Text>
+     </View>
+   )
+ }
  
  const styles = StyleSheet.create({
 
-  center :{
+  content :{
     display : "flex",
-    // justifyContent: "center",
     marginTop: 50,
     height: "100%",
     width: "100%"
@@ -151,28 +175,38 @@
   sectionForm: {
     paddingTop: 20,
     marginLeft: 10,
-    marginLeft: 10
+    marginRight: 10
   },
+
    openButton: {
     height: 50,
     marginTop: 30,
     paddingHorizontal: 24,
    },
    sectionTitle: {
-     fontSize: 20,
-     fontWeight: '500',
+     fontSize: 18,
      marginBottom: 10,
      marginTop: 10
    },
 
-
-
-   sectionTextInput:{
-     marginTop: 10,
-     marginLeft: 20,
-     marginRight: 20
+   title:{
+    fontSize: 30,
+    fontWeight: "600",
+    color: "#1e88f7",
+    justifyContent: "center",
+    display: "flex",
+    textAlign: "center",
+    marginBottom: 10,
    },
+
+
+   sectionSubtitle: {
+    fontSize: 16,
+    fontWeight : '300',
+    marginBottom: 10,
+    marginTop: 10,
   
+  },
   
  });
  
