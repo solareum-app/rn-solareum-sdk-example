@@ -15,16 +15,13 @@ import {
   View,
   Alert,
   Text,
+  ScrollView,
 } from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Solareumsdk from 'react-native-solareum-sdk';
 import {Button, Input} from 'react-native-elements';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
 
   const [address, onChangeAddress] = useState('');
   const [amount, onChangeAmount] = useState('');
@@ -99,50 +96,50 @@ const App = () => {
   }, [signature]);
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      backgroundColor="white">
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <View style={styles.content}>
-        <Text style={styles.title}>Solareum SDK Example</Text>
-        <View style={styles.sectionForm}>
-          <Input
-            label="Address"
-            keyboardType="decimal-pad"
-            placeholder="Enter address"
-            value={address}
-            onChangeText={value => onChangeAddress(value)}
-          />
-          <Input
-            label="Token"
-            keyboardType="decimal-pad"
-            placeholder="Enter token"
-            value={token}
-            onChangeText={value => onChangeToken(value)}
-          />
-          <Input
-            label="Amount"
-            keyboardType="number-pad"
-            placeholder="Enter amount"
-            value={amount}
-            onChangeText={value => onChangeAmount(value)}
-          />
-          <Input
-            label="Client ID"
-            keyboardType="decimal-pad"
-            placeholder="Enter address"
-            value={app_client_id}
-            onChangeText={value => setAppClientId(value)}
-          />
-        </View>
-        <View style={styles.openButton}>
-          <Button title="Pay" onPress={onPress} />
-        </View>
-        <DataContainer
-          client_id={client_id}
-          signature={signature}
-          status={status}
+      <Text style={styles.title}>Solareum SDK Example</Text>
+      <View style={styles.sectionForm}>
+        <Input
+          label="Address"
+          keyboardType="decimal-pad"
+          placeholder="Enter address"
+          value={address}
+          onChangeText={value => onChangeAddress(value)}
+        />
+        <Input
+          label="Token"
+          keyboardType="decimal-pad"
+          placeholder="Enter token"
+          value={token}
+          onChangeText={value => onChangeToken(value)}
+        />
+        <Input
+          label="Amount"
+          keyboardType="number-pad"
+          placeholder="Enter amount"
+          value={amount}
+          onChangeText={value => onChangeAmount(value)}
+        />
+        <Input
+          label="Client ID"
+          keyboardType="decimal-pad"
+          placeholder="Enter address"
+          value={app_client_id}
+          onChangeText={value => setAppClientId(value)}
         />
       </View>
-    </SafeAreaView>
+      <View style={styles.openButton}>
+        <Button title="Pay" onPress={onPress} />
+      </View>
+      <DataContainer
+        client_id={client_id}
+        signature={signature}
+        status={status}
+      />
+    </ScrollView>
   );
 };
 
@@ -197,7 +194,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     display: 'flex',
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 40,
   },
 
   sectionSubtitle: {
