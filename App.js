@@ -132,7 +132,7 @@ const App = () => {
         />
       </View>
       <View style={styles.openButton}>
-        <Button title="Pay" onPress={onPress} />
+        <Button title="Proceed" onPress={onPress} />
       </View>
       <DataContainer
         client_id={client_id}
